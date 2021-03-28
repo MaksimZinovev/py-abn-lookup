@@ -110,8 +110,18 @@ Windows (venv):
 
 ### Activate virtual environment
 
+MacOS
+
 ```shell
 ▶ source venv/bin/activate
+```
+
+
+
+Wndows - please refer to [python docs](https://docs.python.org/3/library/venv.html)
+
+```shell
+ venv\Scripts\activate.bat
 ```
 
 
@@ -197,7 +207,7 @@ For more configuration info, please read [Pyleniumio docs.](https://elsnoman.git
 ## FAQ
 
 - **I am getting the error related to driver**
-    
+  
     - Please check your browser version. Browser version should match driver version. 
     - Update your browser if necessary or specify which driver version you want to use in pylenium.json.
     - For more info please visit [Pyleniumio docs.](https://elsnoman.gitbook.io/pylenium/)
@@ -205,8 +215,11 @@ For more configuration info, please read [Pyleniumio docs.](https://elsnoman.git
     ![chrome_version](img/chrome_version.png)
     
     ![driver_manager](img/driver_manager.png)
+    &nbsp;
+    
+- **I am on Windows and getting error while runningthe tests.**
 
----
+    - if you have python 3.9 try to use python 3.8 instead.
 
 
 
