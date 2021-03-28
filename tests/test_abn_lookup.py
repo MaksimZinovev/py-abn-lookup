@@ -1,9 +1,6 @@
-import time
-import logging
 from collections import namedtuple
 
 # Constants
-
 ABN_DETAILS_PAGE_H1 = "Current details for ABN 27 152 260 814"
 
 # URL
@@ -56,8 +53,6 @@ automic_group = ExpectedResult(
 )
 
 expected_results = [automic_pty_ptd, automic_legal, automic_finance, automic_group]
-
-
 ExpectedAbnDetails = namedtuple("ExpectedAbnDetails",
                                 "entity_name abn_status entity_type business_location business_names abn_number")
 automic_pty_ptd_details = ExpectedAbnDetails(
