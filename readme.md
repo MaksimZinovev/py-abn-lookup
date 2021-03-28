@@ -1,8 +1,6 @@
 
 
-![abn_lookup_page](/Users/maksim/repos/py-abn-lookup/img/abn_lookup_page.png)
-
-
+![](img/abn_lookup_page.png)
 
 # ABN Lookup: Automated Web UI Tests
 
@@ -18,7 +16,7 @@
 
   - Expected:
     - The search results shall contain
-    - ![search_results](/Users/maksim/repos/py-abn-lookup/img/search_results.png)
+    - ![search_results](img/search_results.png)
 
 
 
@@ -34,7 +32,7 @@
   - Expected:
 
     - ABN details should contain
-    - ![abn_details](/Users/maksim/repos/py-abn-lookup/img/abn_details.png)
+    - ![abn_details](img/abn_details.png)
 
 
 
@@ -162,7 +160,7 @@ pytest tests --browser=chrome
 
 
 
-![test_results](/Users/maksim/repos/py-abn-lookup/img/test_results.png)
+![test_results](img/test_results.png)
 
 
 
@@ -176,9 +174,9 @@ pytest tests --browser=chrome
     - Update your browser if necessary or specify which driver version you want to use in pylenium.json.
     - For more info please visit [Pyleniumio docs.](https://elsnoman.gitbook.io/pylenium/)
     
-    ![chrome_version](/Users/maksim/repos/py-abn-lookup/img/chrome_version.png)
+    ![chrome_version](img/chrome_version.png)
     
-    ![driver_manager](/Users/maksim/repos/py-abn-lookup/img/driver_manager.png)
+    ![driver_manager](img/driver_manager.png)
 
 ---
 
