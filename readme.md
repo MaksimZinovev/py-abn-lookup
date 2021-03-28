@@ -21,6 +21,7 @@
 
 
 - TC-2
+
   - Steps:
 
     - Execute TC-1
@@ -69,8 +70,8 @@ Please find below more details on how to install on macOS.
 
 - Clone this repo to your local machine using 
 
-```
-▶ git clone 
+```shell
+▶ git clone https://github.com/MaksimZinovev/py-abn-lookup.git
 ```
 
 
@@ -132,6 +133,8 @@ pytest tests --options="headless, disable-gpu, no-sandbox"
 
 Run the tests using Chrome.
 
+You can configure which browser to use for tests in two ways: using pylenium.json or directly from terminal. 
+
 Pylenium.json is located in the root folder of the repo.
 
 ```json
@@ -152,7 +155,7 @@ Pylenium.json is located in the root folder of the repo.
 
 
 
-Configuring browser from terminal. This is the browser name - "chrome" or "firefox" or "ie" or "opera" or "edge". For example, Chrome
+Configuring browser from terminal. This is the browser name - "chrome" or "firefox" or "ie" or "opera" or "edge". For example, running tests using Chrome
 
 ```shell
 pytest tests --browser=chrome
@@ -163,6 +166,8 @@ pytest tests --browser=chrome
 ![test_results](img/test_results.png)
 
 
+
+For more configuration info, please read [Pyleniumio docs.](https://elsnoman.gitbook.io/pylenium/)
 
 
 
