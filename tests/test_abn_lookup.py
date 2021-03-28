@@ -10,10 +10,47 @@ BASE_URL = "https://abr.business.gov.au/"
 
 # Web locators
 SEARCH_BUTTON = "#MainSearchButton"
+SEARCH_INPUT_FIELD = "#SearchText"
+RESULTS_TABLE_ROWS = "#content-matching  tbody tr"
 
-expected_result = namedtuple("ExpectedResults", "abn_number name type location")
+ExpectedResult = namedtuple("ExpectedResults", "abn_number status name type location")
+
+# Expected results
+automic_pty_ptd = ExpectedResult(
+    abn_number="27 152 260 814",
+    status="Active",
+    name="AUTOMIC PTY LTD",
+    type="Entity Name",
+    location="2000 NSW",
+)
+
+automic_finance = ExpectedResult(
+    abn_number="37 085 283 601",
+    status="Active",
+    name="AUTOMIC FINANCE PTY LTD",
+    type="Entity Name",
+    location="2000 NSW",
+)
+
+automic_legal = ExpectedResult(
+    abn_number="80 147 418 942",
+    status="Active",
+    name="AUTOMIC LEGAL PTY LTD",
+    type="Entity Name",
+    location="2000 NSW",
+)
+
+automic_group = ExpectedResult(
+    abn_number="27 152 260 814",
+    status="Active",
+    name="Automic Group",
+    type="Business Name",
+    location="2000 NSW",
+)
 
 
+# expected_results = [automic_pty_ptd]
+expected_results = [automic_pty_ptd, automic_legal, automic_finance, automic_group]
 
 
 def test_abn_lookup(py):
@@ -24,37 +61,16 @@ def test_abn_lookup(py):
     # THEN results should be relevant to search query
 
     py.visit(BASE_URL)
-    py.get("#SearchText").should().be_visible().type(SEARCH_QUERY)
-
+    py.get(SEARCH_INPUT_FIELD).should().be_visible().type(SEARCH_QUERY)
     py.get(SEARCH_BUTTON).should().be_clickable().click()
+    search_results_rows = py.find(RESULTS_TABLE_ROWS)[1:]
+    for expected_result in expected_results:
+        assert len(search_results_rows) > 4
+        assert any((expected_result.name in row.text()) for row in search_results_rows)
 
-    result_rows = py.find("#content-matching  tbody tr ")[1:30]
-    abn_col_elements = py.find("#content-matching a")
-
-    assert len(abn_col_elements) > 3
-
-    logging.info(f"row 1: {result_rows[1].get('a').text()}")
-
-    # Row 1
-    # assert "27 152 260 814" in result_rows[1].get("a").text()
-    # assert "Active" in result_rows[1].get("span").text()
-    # assert "AUTOMIC PTY LTD" in result_rows[1].contains("AUTOMIC PTY LTD").text()
-    # assert "Entity Name" in result_rows[1].contains("Entity Name").text()
-
-    r1 = ("27 152 260 814", "Active", "AUTOMIC PTY LTD", "Entity Name",)
-
-    assert any(row.get("a").text() == r1[0] for row in result_rows)
-
-    for row in result_rows:
-        if row.get("a").text() == r1[0]:
-            assert "Active" in row.get("span").text()
-            assert "AUTOMIC PTY LTD" in row.contains("AUTOMIC PTY LTD").text()
-            assert "Entity Name" in row.contains("Entity Name").text()
-            break
-
-
-
-
-
-
-    time.sleep(2)
+        found_row = py.contains(expected_result.name).parent()
+        assert expected_result.abn_number in found_row.get("a").text()
+        assert expected_result.status in found_row.get("span").text()
+        assert found_row.contains(expected_result.name)
+        assert found_row.contains(expected_result.type)
+        assert expected_result.location in found_row.text()
