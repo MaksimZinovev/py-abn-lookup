@@ -54,15 +54,13 @@ Installation includes the following steps:
 
 Dependencies include:
 
-- python 3
+- python3
 - pip
 - virtualenv (or alternative tool)
-- pyleniumio
-- pytest
 
 
 
-Please find below more details on how to install on macOS.
+Please find below more details on how to install repo.
 
 
 
@@ -78,9 +76,34 @@ Please find below more details on how to install on macOS.
 
 ### Create virtual environment
 
-```shell
+Assuming you  already have **python3** installed on your machine.
+
+```
 ▶ cd py-abn-lookup
+```
+
+
+
+MacOS (virtualenv):
+
+```shell
 ▶ virtualenv venv
+```
+
+
+
+MacOS (venv):
+
+```shell
+▶ python3 -m venv "venv"
+```
+
+
+
+Windows (venv):
+
+```shell
+▶ python -m venv "venv"
 ```
 
 
@@ -96,7 +119,7 @@ Please find below more details on how to install on macOS.
 ### Install dependencies  from requirements.txt
 
 ```shell
-▶ pip install requirements.txt
+▶ pip install -r requirements.txt
 ▶ pylenium --version
 ```
 

@@ -55,7 +55,7 @@ automic_group = ExpectedResult(
 expected_results = [automic_pty_ptd, automic_legal, automic_finance, automic_group]
 ExpectedAbnDetails = namedtuple("ExpectedAbnDetails",
                                 "entity_name abn_status entity_type business_location business_names abn_number")
-automic_pty_ptd_details = ExpectedAbnDetails(
+automic_pty_ltd_details = ExpectedAbnDetails(
     entity_name="AUTOMIC PTY LTD",
     abn_status="Active from 19 Jun 2012",
     entity_type="Australian Private Company",
@@ -102,13 +102,13 @@ def test_abn_details(py):
     found_row = py.contains(automic_pty_ptd.name).parent()
     found_row.get("[href]").should().be_clickable().click()
 
-    assert py.url().endswith(automic_pty_ptd_details.abn_number)
+    assert py.url().endswith(automic_pty_ltd_details.abn_number)
     assert ABN_DETAILS_PAGE_H1 in py.get("h1").text()
 
-    assert automic_pty_ptd_details.entity_name in py.get(ENTITY_NAME).text()
-    assert automic_pty_ptd_details.abn_status in py.contains("ABN status:").parent().get("td").text()
-    assert automic_pty_ptd_details.entity_type in py.contains("Entity type:").parent().get("a").text()
-    assert automic_pty_ptd_details.business_location in py.get(LOCATION).text()
-    for business_name in automic_pty_ptd_details.business_names:
+    assert automic_pty_ltd_details.entity_name in py.get(ENTITY_NAME).text()
+    assert automic_pty_ltd_details.abn_status in py.contains("ABN status:").parent().get("td").text()
+    assert automic_pty_ltd_details.entity_type in py.contains("Entity type:").parent().get("a").text()
+    assert automic_pty_ltd_details.business_location in py.get(LOCATION).text()
+    for business_name in automic_pty_ltd_details.business_names:
         assert business_name in py.contains("Business name(s)").parent().text()
 
