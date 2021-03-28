@@ -3,15 +3,22 @@ import logging
 from collections import namedtuple
 
 # Constants
-SEARCH_QUERY = "Automic"
+
+ABN_DETAILS_PAGE_H1 = "Current details for ABN 27 152 260 814"
 
 # URL
 BASE_URL = "https://abr.business.gov.au/"
 
 # Web locators
+# Search results page
 SEARCH_BUTTON = "#MainSearchButton"
 SEARCH_INPUT_FIELD = "#SearchText"
 RESULTS_TABLE_ROWS = "#content-matching  tbody tr"
+
+# ABN details page
+LOCATION = "[itemprop='addressLocality']"
+ENTITY_NAME = "[itemprop='legalName']"
+SEARCH_QUERY = "Automic"
 
 ExpectedResult = namedtuple("ExpectedResults", "abn_number status name type location")
 
@@ -48,9 +55,19 @@ automic_group = ExpectedResult(
     location="2000 NSW",
 )
 
-
-# expected_results = [automic_pty_ptd]
 expected_results = [automic_pty_ptd, automic_legal, automic_finance, automic_group]
+
+
+ExpectedAbnDetails = namedtuple("ExpectedAbnDetails",
+                                "entity_name abn_status entity_type business_location business_names abn_number")
+automic_pty_ptd_details = ExpectedAbnDetails(
+    entity_name="AUTOMIC PTY LTD",
+    abn_status="Active from 19 Jun 2012",
+    entity_type="Australian Private Company",
+    business_location="NSW 2000",
+    business_names=["CoSecPro", "Automic Group", "Invana", ],
+    abn_number="27152260814",
+)
 
 
 def test_abn_lookup(py):
@@ -76,24 +93,10 @@ def test_abn_lookup(py):
         assert expected_result.location in found_row.text()
 
 
-ExpectedAbnDetails = namedtuple("ExpectedAbnDetails",
-                                "entity_name abn_status entity_type business_location business_names")
-
-automic_pty_ptd_details = ExpectedAbnDetails(
-    entity_name="AUTOMIC PTY LTD",
-    abn_status="Active from 19 Jun 2012",
-    entity_type="Australian Private Company",
-    business_location="NSW 2000",
-    business_names=["CoSecPro", "Automic Group", "Invana", ]
-)
-
-ENTITY_TYPE = "//a[contains(text(), 'Australian Private Company')]"
-
-
 def test_abn_details(py):
-    """Verify search abn"""
+    """Verify Current details for ABN page"""
     # GIVEN ABN lookup page with the results has loaded
-    # WHEN user clicks on the ABN link
+    # WHEN user clicks ABN link
     # THEN user is redirected to the Current details for ABN page
     # AND ABN details match expected details
 
@@ -103,18 +106,14 @@ def test_abn_details(py):
 
     found_row = py.contains(automic_pty_ptd.name).parent()
     found_row.get("[href]").should().be_clickable().click()
-    assert py.url().endswith("27152260814")
-    assert "Current details for ABN 27 152 260 814" in py.get("h1").text()
 
-    assert automic_pty_ptd_details.entity_name in py.get("[itemprop='legalName']").text()
-    assert automic_pty_ptd_details.abn_status in py.getx('//th[contains(text(), "ABN status")]').parent().text()
+    assert py.url().endswith(automic_pty_ptd_details.abn_number)
+    assert ABN_DETAILS_PAGE_H1 in py.get("h1").text()
+
+    assert automic_pty_ptd_details.entity_name in py.get(ENTITY_NAME).text()
+    assert automic_pty_ptd_details.abn_status in py.contains("ABN status:").parent().get("td").text()
     assert automic_pty_ptd_details.entity_type in py.contains("Entity type:").parent().get("a").text()
-    assert automic_pty_ptd_details.business_location in py.get("[itemprop='addressLocality']").text()
+    assert automic_pty_ptd_details.business_location in py.get(LOCATION).text()
     for business_name in automic_pty_ptd_details.business_names:
         assert business_name in py.contains("Business name(s)").parent().text()
 
-
-
-
-
-    time.sleep(2)
