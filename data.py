@@ -40,7 +40,7 @@ automic_finance = ExpectedResult(
 automic_legal = ExpectedResult(
     abn_number="80 147 418 942",
     status="Active",
-    name="AUTOMIC LEGAL PTY LTD",
+    name="AUTOMIC COMPANY SECRETARIAL PTY LTD",
     type="Entity Name",
     location="2000 NSW",
 )
@@ -53,6 +53,7 @@ automic_group = ExpectedResult(
     location="2000 NSW",
 )
 
+# expected_results = [automic_pty_ptd, automic_legal, automic_finance, automic_group]
 expected_results = [automic_pty_ptd, automic_legal, automic_finance, automic_group]
 ExpectedAbnDetails = namedtuple("ExpectedAbnDetails",
                                 "entity_name abn_status entity_type business_location business_names abn_number")
@@ -61,6 +62,6 @@ automic_pty_ltd_details = ExpectedAbnDetails(
     abn_status="Active from 19 Jun 2012",
     entity_type="Australian Private Company",
     business_location="NSW 2000",
-    business_names=["CoSecPro", "Automic Group", "Invana", ],
+    business_names=["CoSecPro", "Automic Group",],
     abn_number="27152260814",
 )

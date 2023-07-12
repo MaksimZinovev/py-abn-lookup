@@ -1,7 +1,13 @@
 from data import *
+import pytest
 
 
-def test_abn_lookup(py):
+@pytest.mark.parametrize('inp, expected', [
+    (SEARCH_QUERY, expected_results[0]), 
+    (SEARCH_QUERY, expected_results[1]), 
+    (SEARCH_QUERY, expected_results[2]),
+    (SEARCH_QUERY, expected_results[3])])
+def test_abn_lookup1(py, inp, expected):
     """Verify search abn"""
     # GIVEN ABN lookup page has loaded
     # WHEN user types search query into Search field
@@ -9,19 +15,20 @@ def test_abn_lookup(py):
     # THEN results contain expected results, such as ABN number, Name, Type, Location
 
     py.visit(BASE_URL)
-    py.get(SEARCH_INPUT_FIELD).should().be_visible().type(SEARCH_QUERY)
+    py.get(SEARCH_INPUT_FIELD).should().be_visible().type(inp)
     py.get(SEARCH_BUTTON).should().be_clickable().click()
     search_results_rows = py.find(RESULTS_TABLE_ROWS)[1:]
-    for expected_result in expected_results:
-        assert len(search_results_rows) > 4
-        assert any((expected_result.name in row.text()) for row in search_results_rows)
 
-        found_row = py.contains(expected_result.name).parent()
-        assert expected_result.abn_number in found_row.get("a").text()
-        assert expected_result.status in found_row.get("span").text()
-        assert found_row.contains(expected_result.name)
-        assert found_row.contains(expected_result.type)
-        assert expected_result.location in found_row.text()
+    assert len(search_results_rows) > 4
+    assert  any((expected.name in row.text()) for row in search_results_rows) 
+    
+    found_row = py.contains(expected.name).parent()
+    assert expected.abn_number in found_row.get("a").text()
+    assert expected.status in found_row.get("span").text()
+    assert found_row.contains(expected.name)
+    assert found_row.contains(expected.type)
+    assert expected.location in found_row.text()
+
 
 
 def test_abn_details(py):
