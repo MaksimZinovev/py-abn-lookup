@@ -69,7 +69,7 @@ Please find below more details on how to install repo.
 - Clone this repo to your local machine using 
 
 ```shell
-▶ git clone https://github.com/MaksimZinovev/py-abn-lookup.git
+git clone https://github.com/MaksimZinovev/py-abn-lookup.git
 ```
 
 
@@ -79,7 +79,7 @@ Please find below more details on how to install repo.
 Assuming you  already have **python3** installed on your machine.
 
 ```
-▶ cd py-abn-lookup
+cd py-abn-lookup
 ```
 
 
@@ -87,7 +87,7 @@ Assuming you  already have **python3** installed on your machine.
 MacOS (virtualenv):
 
 ```shell
-▶ virtualenv venv
+virtualenv venv
 ```
 
 
@@ -95,7 +95,7 @@ MacOS (virtualenv):
 MacOS (venv):
 
 ```shell
-▶ python3 -m venv "venv"
+python3 -m venv "venv"
 ```
 
 
@@ -103,7 +103,7 @@ MacOS (venv):
 Windows (venv):
 
 ```shell
-▶ python -m venv "venv"
+python -m venv "venv"
 ```
 
 
@@ -113,7 +113,7 @@ Windows (venv):
 MacOS
 
 ```shell
-▶ source venv/bin/activate
+source venv/bin/activate
 ```
 
 
@@ -129,8 +129,8 @@ Wndows - please refer to [python docs](https://docs.python.org/3/library/venv.ht
 ### Install dependencies  from requirements.txt
 
 ```shell
-▶ pip install -r requirements.txt
-▶ pylenium --version
+pip install -r requirements.txt
+pylenium --version
 ```
 
 
@@ -149,10 +149,15 @@ For more details, please visit [Pyleniumio docs](https://elsnoman.gitbook.io/pyl
 
 Run all tests
 
-```
-▶ pytest tests   
+```shell
+pytest tests   
 ```
 
+Run single test
+
+```shell
+pytest tests/test_abn_lookup.py::test_abn_details   
+```
 
 
 Headless tests
