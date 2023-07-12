@@ -175,8 +175,9 @@ You can configure which browser to use for tests in two ways: using pylenium.jso
 
 Pylenium.json is located in the root folder of the repo.
 
+
 ```json
-# pylenium.json
+
 "driver": {
     "browser": "chrome",
     "remote_url": "",
